@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Success</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .success-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background: linear-gradient(to right bottom, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-title {
+            color: #4CAF50;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-message {
+            color: #2c3e50;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .btn-back {
+            background-color: #4CAF50;
+            border: none;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header th:replace="~{header.html}"></header>
+
+    <main class="container">
+        <div class="success-container">
+            <i class="bi bi-check-circle-fill success-icon"></i>
+            <h1 class="success-title" th:text="${title}">Gửi phản hồi thành công!</h1>
+            <p class="success-message">
+                Cảm ơn bạn đã liên hệ với chúng tôi! Chúng tôi đã nhận được tin nhắn của bạn 
+                và sẽ phản hồi trong thời gian sớm nhất.
+            </p>
+            <a href="/contact" class="btn btn-back btn-primary">
+                <i class="bi bi-arrow-left me-2"></i>Quay lại trang liên hệ
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{footer.html}"></footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

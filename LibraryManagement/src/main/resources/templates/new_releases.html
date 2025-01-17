@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sách Mới Phát Hành</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<!-- Header -->
+    <header th:replace="~{header.html}"></header>
+    <div class="container mt-4">
+        <h2 class="mb-4">�� Sách Mới Phát Hành (60 ngày gần đây)</h2>
+        <div class="row">
+            <div th:if="${#lists.isEmpty(books)}" class="col-12">
+                <div class="alert alert-info">
+                    Hiện chưa có sách mới phát hành.
+                </div>
+            </div>
+            <div class="col-md-4 mb-3" th:each="book : ${books}">
+                <div class="card h-100">
+                    <img class="card-img-top" th:src="@{'/images/' + ${book.coverImage}}" alt="Cover Image" style="height: 300px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${book.title}"></h5>
+                        <p class="card-text" th:text="'Tác giả: ' + ${book.author}"></p>
+                        <p class="card-text">
+                            <small class="text-muted" th:text="'Ngày phát hành: ' + ${#dates.format(book.releaseDate, 'dd-MM-yyyy')}"></small>
+                        </p>
+                        <a th:href="@{/book-details/{id}(id=${book.id})}" class="btn btn-primary">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer th:replace="~{footer.html}"></footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

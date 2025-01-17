@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý phản hồi</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .sidebar {
+            background: linear-gradient(to bottom, #4CAF50, #45a049);
+            padding: 2rem;
+            border-radius: 15px;
+            min-height: 100vh;
+        }
+
+        .sidebar .nav-link {
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .sidebar .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-container {
+            padding: 2rem;
+            background: linear-gradient(to right bottom, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .table thead th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 600;
+            border: none;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .dashboard-title {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .page-title {
+            color: #4CAF50;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar">
+                <h3 class="dashboard-title">
+                    <i class="bi bi-speedometer2 me-2"></i>
+                    Trang Quản Trị
+                </h3>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/admin-books">
+                            <i class="bi bi-book me-2"></i>Quản lý tài liệu
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/add-book">
+                            <i class="bi bi-plus-circle me-2"></i>Thêm tài liệu
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/statistics">
+                            <i class="bi bi-graph-up me-2"></i>Thống kê
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/contacts">
+                            <i class="bi bi-chat-dots me-2"></i>Phản hồi
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">
+                            <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="content-container">
+                    <h1 class="page-title">
+                        <i class="bi bi-chat-dots me-2"></i>
+                        Quản lý phản hồi
+                    </h1>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên người dùng</th>
+                                    <th>Email</th>
+                                    <th>Chủ đề</th>
+                                    <th>Nội dung</th>
+                                    <th>Thời gian</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="contact : ${contacts}">
+                                    <td th:text="${contact.username}"></td>
+                                    <td th:text="${contact.email}"></td>
+                                    <td th:text="${contact.subject}"></td>
+                                    <td th:text="${contact.message}"></td>
+                                    <td th:text="${#temporals.format(contact.timestamp, 'dd-MM-yyyy HH:mm')}"></td>
+                                    <td>
+                                        <form th:action="@{/admin/contacts/{id}/delete(id=${contact.id})}" 
+                                              method="post" 
+                                              style="display: inline;">
+                                            <button type="submit" 
+                                                    class="btn btn-delete" 
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa phản hồi này?')">
+                                                <i class="bi bi-trash me-1"></i>
+                                                Xóa
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

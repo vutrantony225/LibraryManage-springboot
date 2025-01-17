@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - Digital Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        
+        .register-container {
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 900px;
+            overflow: hidden;
+            margin: 20px;
+        }
+        
+        .register-left {
+            flex: 1;
+            background: #4CAF50;
+            padding: 60px 40px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register-left h1 {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .register-left p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .register-right {
+            flex: 1;
+            padding: 60px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            margin-top: 0;
+        }
+
+        form {
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 15px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            background: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .login-link {
+            margin-top: 24px;
+            text-align: center;
+            color: #666;
+            font-size: 15px;
+        }
+
+        .login-link a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .register-container {
+                flex-direction: column;
+                max-width: 400px;
+            }
+            
+            .register-left,
+            .register-right {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-left">
+            <h1>Welcome!</h1>
+            <p>Đăng ký tài khoản để truy cập thư viện số của bạn và khám phá thế giới tri thức vô tận</p>
+        </div>
+        
+        <div class="register-right">
+            <h2>Đăng ký</h2>
+            <form action="/register" method="post">
+                <div class="form-group">
+                    <label for="username">Tài khoản</label>
+                    <input type="text" 
+                           id="username" 
+                           name="username" 
+                           required 
+                           placeholder="Nhập tài khoản">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" 
+                           id="email" 
+                           name="email" 
+                           required 
+                           placeholder="Nhập email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           required 
+                           placeholder="Nhập mật khẩu">
+                </div>
+
+                <button type="submit">Đăng ký</button>
+            </form>
+
+            <div class="login-link">
+                <span>Đã có tài khoản?</span>
+                <a href="/login">Đăng nhập</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

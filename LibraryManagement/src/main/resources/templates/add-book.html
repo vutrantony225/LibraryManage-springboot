@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thêm Sách Mới</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .form-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(to right bottom, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            color: #4CAF50;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        .btn-submit {
+            background-color: #4CAF50;
+            border: none;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .sidebar {
+            background: linear-gradient(to bottom, #4CAF50, #45a049);
+            padding: 2rem;
+            border-radius: 15px;
+            height: 100%;
+        }
+
+        .sidebar .nav-link {
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/admin-books">
+                                <i class="bi bi-book me-2"></i>Quản lý tài liệu
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/admin/add-book">
+                                <i class="bi bi-plus-circle me-2"></i>Thêm tài liệu
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/statistics">
+                                <i class="bi bi-graph-up me-2"></i>Thống kê
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/contacts">
+                                <i class="bi bi-chat-dots me-2"></i>Phản hồi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">
+                                <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="form-container">
+                    <h2 class="form-title">Thêm Sách Mới</h2>
+                    
+                    <!-- Alert Error -->
+                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <span th:text="${error}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Form -->
+                    <form th:action="@{/admin/add-book}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <!-- Thông tin cơ bản -->
+                        <h4 class="mb-4"><i class="bi bi-info-circle me-2"></i>Thông tin cơ bản</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required-field">Tên sách</label>
+                                <input type="text" class="form-control" name="title" required>
+                                <div class="invalid-feedback">Vui lòng nhập tên sách</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required-field">Tác giả</label>
+                                <input type="text" class="form-control" name="author" required>
+                                <div class="invalid-feedback">Vui lòng nhập tên tác giả</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required-field">Thể loại</label>
+                                <select class="form-control" name="categoryId" required>
+                                    <option value="">Chọn thể loại</option>
+                                    <option th:each="category : ${categories}" 
+                                            th:value="${category.id}" 
+                                            th:text="${category.name}">
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">Vui lòng chọn thể loại</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required-field">Ngày phát hành</label>
+                                <input type="date" class="form-control" name="releaseDate" required>
+                                <div class="invalid-feedback">Vui lòng chọn ngày phát hành</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" name="description" rows="3"></textarea>
+                        </div>
+
+                        <!-- Thông tin chi tiết -->
+                        <h4 class="mb-4 mt-5"><i class="bi bi-card-text me-2"></i>Thông tin chi tiết</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nhà xuất bản</label>
+                                <input type="text" class="form-control" name="publisher">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required-field">Số trang</label>
+                                <input type="number" class="form-control" name="pageCount" required min="1">
+                                <div class="invalid-feedback">Vui lòng nhập số trang</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ngôn ngữ</label>
+                                <input type="text" class="form-control" name="language">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">ISBN</label>
+                                <input type="text" class="form-control" name="isbn">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tóm tắt</label>
+                            <textarea class="form-control" name="summary" rows="3"></textarea>
+                        </div>
+
+                        <!-- File Upload -->
+                        <h4 class="mb-4 mt-5"><i class="bi bi-upload me-2"></i>Tải file</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ảnh bìa</label>
+                                <input type="file" class="form-control" name="coverImage" accept="image/*">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">File PDF</label>
+                                <input type="file" class="form-control" name="pdfFile" accept="application/pdf">
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="mt-5 text-center">
+                            <button type="submit" class="btn btn-submit btn-primary me-2">
+                                <i class="bi bi-plus-circle me-2"></i>Thêm sách
+                            </button>
+                            <a th:href="@{/admin}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-2"></i>Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Form Validation Script -->
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+</body>
+</html> 
